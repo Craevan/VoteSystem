@@ -2,10 +2,7 @@ package com.crevan.votesystem.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,15 +11,10 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@ToString(callSuper = true, exclude = "password")
 @Table(name = "users")
-public class User extends BaseEntity implements Serializable {
-
-    @NotBlank
-    @Size(max = 128)
-    @Column(name = "name", nullable = false)
-    private String name;
+@ToString(callSuper = true, exclude = "password")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User extends NamedEntity implements Serializable {
 
     @Email
     @NotEmpty
