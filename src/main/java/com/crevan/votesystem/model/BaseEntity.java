@@ -1,5 +1,6 @@
 package com.crevan.votesystem.model;
 
+import com.crevan.votesystem.HasId;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.domain.Persistable;
@@ -13,17 +14,11 @@ import org.springframework.util.Assert;
 @Access(value = AccessType.FIELD)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class BaseEntity implements Persistable<Integer> {
+public abstract class BaseEntity implements Persistable<Integer>, HasId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Override
-    public Integer getId() {
-        Assert.notNull(id, "Entity must have id");
-        return id;
-    }
 
     @Override
     public boolean isNew() {
