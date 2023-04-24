@@ -1,7 +1,7 @@
 package com.crevan.votesystem.web.user;
 
 import com.crevan.votesystem.model.User;
-import com.crevan.votesystem.util.validation.ValidationUtil;
+import com.crevan.votesystem.util.ValidationUtil;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class AdminUserController extends AbstractUserController {
         repository.prepareAndSave(user);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<User> getAll() {
         log.info("getting all users");
         return repository.findAll();
