@@ -14,4 +14,9 @@ public class NamedEntityTo extends BaseEntityTo {
     @NotBlank
     @Size(max = 128)
     protected String name;
+
+    public NamedEntityTo(final Integer id, final String name) {
+        super(id);
+        this.name = name;
+    }
 }
