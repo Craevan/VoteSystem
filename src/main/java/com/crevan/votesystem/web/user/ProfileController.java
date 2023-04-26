@@ -43,7 +43,7 @@ public class ProfileController extends AbstractUserController {
     public ResponseEntity<User> register(@Valid @RequestBody final UserTo userTo) {
         log.info("register {}", userTo);
         ValidationUtil.checkNew(userTo);
-        User newUser = UserUtil.createNewFromTo(userTo);
+        User newUser = repository.save(UserUtil.prepareToSave(UserUtil.createNewFromTo(userTo)));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL)
                 .build().toUri();
