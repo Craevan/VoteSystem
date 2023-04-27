@@ -4,10 +4,12 @@ import com.crevan.votesystem.model.Restaurant;
 import com.crevan.votesystem.repository.RestaurantRepository;
 import com.crevan.votesystem.util.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 public abstract class AbstractRestaurantController {
 
+    @Autowired
     protected RestaurantRepository repository;
 
     public Restaurant create(final Restaurant restaurant) {

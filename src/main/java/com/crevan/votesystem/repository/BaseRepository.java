@@ -1,6 +1,5 @@
 package com.crevan.votesystem.repository;
 
-
 import com.crevan.votesystem.error.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -24,7 +23,6 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer> {
             throw new NotFoundException("Entity with id=" + id + " not found");
         }
     }
-
 
     default T getExisted(final int id) {
         return findById(id).orElseThrow(() -> new NotFoundException("Entity with id=" + id + " not found"));

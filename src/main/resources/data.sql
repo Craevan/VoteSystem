@@ -13,3 +13,6 @@ VALUES ('Kriek'),
        ('AltVelvet'),
        ('Paulaner'),
        ('Salhino');
+
+INSERT INTO DISH(name, price, vote_date, restaurant_id)
+VALUES ('TEST DISH', 1111, '2023-04-27', 1)
