@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -35,9 +36,13 @@ public class Vote extends BaseEntity {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    @NotNull
+    @CreationTimestamp
     @Column(name = "vote_date", nullable = false)
     private LocalDate voteDate;
+
+    public Vote(final User user, final Restaurant restaurant) {
+        this(null, user, restaurant, null);
+    }
 
     public Vote(final Integer id, final User user, final Restaurant restaurant, final LocalDate voteDate) {
         super(id);
