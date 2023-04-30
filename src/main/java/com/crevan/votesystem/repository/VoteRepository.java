@@ -15,6 +15,6 @@ public interface VoteRepository extends BaseRepository<Vote> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Vote v SET v.restaurant.id = ?2 WHERE v.user.id = ?1 AND v.voteDate = NOW()")
+    @Query("UPDATE Vote v SET v.restaurant.id = ?2 WHERE v.user.id = ?1 AND v.voteDate = current_date")
     void update(final int userId, final int restaurantId);
 }
