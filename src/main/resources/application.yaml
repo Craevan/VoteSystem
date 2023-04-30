@@ -27,3 +27,6 @@ server.servlet:
     charset: UTF-8
     enabled: true
     force: true
+
+vote:
+  deadline: "11:00:00"
