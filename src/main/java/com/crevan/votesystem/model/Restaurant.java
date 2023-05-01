@@ -22,6 +22,10 @@ public class Restaurant extends NamedEntity implements Serializable {
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Dish> menu;
 
+    public Restaurant(final Restaurant kriek) {
+        this(kriek.id(), kriek.name, kriek.menu);
+    }
+
     public Restaurant(final Integer id, final String name) {
         super(id, name);
     }
