@@ -1,10 +1,11 @@
 package com.crevan.votesystem.web.user;
 
 import com.crevan.votesystem.model.User;
-import com.crevan.votesystem.util.ValidationUtil;
+import com.crevan.votesystem.util.validation.ValidationUtil;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AdminUserController extends AbstractUserController {
     static final String REST_URL = "/api/admin/users";
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(@Valid @RequestBody final User user) {
+    public ResponseEntity<User> createWithLocation(@Valid @RequestBody User user) {
         log.info("create {}", user);
         ValidationUtil.checkNew(user);
         User created = repository.prepareAndSave(user);
@@ -43,7 +44,7 @@ public class AdminUserController extends AbstractUserController {
     @GetMapping
     public List<User> getAll() {
         log.info("getting all users");
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.ASC, "name", "email"));
     }
 
     @GetMapping("/by-email")

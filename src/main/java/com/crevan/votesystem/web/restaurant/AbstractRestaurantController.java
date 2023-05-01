@@ -2,7 +2,7 @@ package com.crevan.votesystem.web.restaurant;
 
 import com.crevan.votesystem.model.Restaurant;
 import com.crevan.votesystem.repository.RestaurantRepository;
-import com.crevan.votesystem.util.ValidationUtil;
+import com.crevan.votesystem.util.validation.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 

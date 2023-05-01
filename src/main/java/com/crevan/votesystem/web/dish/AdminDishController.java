@@ -2,7 +2,7 @@ package com.crevan.votesystem.web.dish;
 
 import com.crevan.votesystem.model.Dish;
 import com.crevan.votesystem.to.DishTo;
-import com.crevan.votesystem.util.ValidationUtil;
+import com.crevan.votesystem.util.validation.ValidationUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

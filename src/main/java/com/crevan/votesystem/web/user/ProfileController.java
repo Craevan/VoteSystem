@@ -3,7 +3,7 @@ package com.crevan.votesystem.web.user;
 import com.crevan.votesystem.model.User;
 import com.crevan.votesystem.to.UserTo;
 import com.crevan.votesystem.util.UserUtil;
-import com.crevan.votesystem.util.ValidationUtil;
+import com.crevan.votesystem.util.validation.ValidationUtil;
 import com.crevan.votesystem.web.AuthUser;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -52,8 +52,9 @@ public class ProfileController extends AbstractUserController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody final UserTo userTo, @AuthenticationPrincipal final AuthUser authUser) {
+    public void update(@RequestBody @Valid final UserTo userTo, @AuthenticationPrincipal final AuthUser authUser) {
         log.info("update {} to {}", authUser, userTo);
-        repository.save(UserUtil.updateFromTo(authUser.getUser(), userTo));
+        User user = authUser.getUser();
+        repository.prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }
 }
