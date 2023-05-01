@@ -1,41 +1,47 @@
 package com.crevan.votesystem.config;
 
+import com.crevan.votesystem.util.json.JsonUtil;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.jakarta.Hibernate5JakartaModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.h2.tools.Server;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.http.ProblemDetail;
 
 import java.sql.SQLException;
+import java.util.Map;
 
-@Slf4j
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+
 @Configuration
+@Slf4j
 public class ApplicationConfig {
+
+    @Profile("!test")
     @Bean(initMethod = "start", destroyMethod = "stop")
-    public Server h2Server() throws SQLException {
-        log.info("Starting H2 DB Server");
+    Server h2Server() throws SQLException {
+        log.info("Start H2 TCP server");
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
     }
 
-    // https://stackoverflow.com/questions/48117059/could-not-write-json-failed-to-lazily-initialize-a-collection-of-role
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new Hibernate5JakartaModule());
+    //   https://stackoverflow.com/a/74630129/548473
+    @JsonAutoDetect(fieldVisibility = NONE, getterVisibility = ANY)
+    interface MixIn {
+        @JsonAnyGetter
+        Map<String, Object> getProperties();
+    }
 
-        // https://stackoverflow.com/questions/60608345/spring-boot-hateoas-and-custom-jacksonobjectmapper
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return objectMapper;
+    @Autowired
+    void configureAndStoreObjectMapper(ObjectMapper objectMapper) {
+        objectMapper.registerModule(new Hibernate5JakartaModule());
+        // ErrorHandling: https://stackoverflow.com/questions/7421474/548473
+        objectMapper.addMixIn(ProblemDetail.class, MixIn.class);
+        JsonUtil.setMapper(objectMapper);
     }
 }
