@@ -1,4 +1,4 @@
-package com.crevan.votesystem.util;
+package com.crevan.votesystem.util.validation;
 
 import com.crevan.votesystem.HasId;
 import com.crevan.votesystem.error.IllegalRequestDataException;
