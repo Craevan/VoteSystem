@@ -17,10 +17,18 @@ spring:
     username: sa
     password:
 
+  jackson:
+    visibility:
+      field: any
+      getter: none
+      setter: none
+      is-getter: none
+
 logging:
   level:
     root: warn
     com.crevan.votesystem: debug
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: debug
 
 server.servlet:
   encoding:
