@@ -1,9 +1,7 @@
 package com.crevan.votesystem.web.restaurant;
 
-import com.crevan.votesystem.repository.RestaurantRepository;
 import com.crevan.votesystem.web.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -19,9 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class RestaurantControllerTest extends AbstractControllerTest {
 
     static final String REST_URL_SLASH = REST_URL + "/";
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
 
     @Test
     @WithUserDetails(value = USER_MAIL)
@@ -39,5 +34,18 @@ class RestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(kriek));
+    }
+
+    @Test
+    void getUnAuth() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void getNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL_SLASH + NOT_FOUND))
+                .andExpect(status().isNotFound());
     }
 }
