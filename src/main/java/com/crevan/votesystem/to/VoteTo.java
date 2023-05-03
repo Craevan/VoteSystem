@@ -1,5 +1,6 @@
 package com.crevan.votesystem.to;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,8 +14,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class VoteTo extends BaseEntityTo {
 
+    @NotNull
     private Integer restaurantId;
 
+    @NotNull
     private LocalDate voteDate;
 
     public VoteTo(final Integer id, final Integer restaurantId, final LocalDate voteDate) {
