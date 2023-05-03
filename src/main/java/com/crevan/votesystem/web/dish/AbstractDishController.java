@@ -21,6 +21,7 @@ public class AbstractDishController {
         log.info("create {}", dishTo);
         Dish dish = DishUtil.createNewFromTo(dishTo);
         dish.setRestaurant(restaurantRepository.getExisted(dishTo.getRestaurantId()));
+        dishRepository.save(dish);
         return dish;
     }
 
