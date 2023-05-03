@@ -5,11 +5,9 @@ import com.crevan.votesystem.to.DishTo;
 import com.crevan.votesystem.util.DishUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -20,9 +18,9 @@ public class DishController extends AbstractDishController {
     public static final String REST_URL = "/api/dish";
 
     @GetMapping
-    public List<DishTo> getAll() {
-        log.info("getting all restaurants");
-        return DishUtil.getTos(dishRepository.findAll());
+    public List<DishTo> getAll(@RequestParam final int restaurantId, @RequestParam final LocalDate date) {
+        log.info("getting all dishes for restaurant with id={}", restaurantId);
+        return DishUtil.getTos(dishRepository.findAll(restaurantId, date));
     }
 
     @GetMapping("/{id}")
