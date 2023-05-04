@@ -5,6 +5,9 @@ import com.crevan.votesystem.util.validation.ValidationUtil;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,11 +20,13 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@CacheConfig(cacheNames = "users")
 @RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminUserController extends AbstractUserController {
 
     static final String REST_URL = "/api/admin/users";
 
+    @CacheEvict(value = "users", allEntries = true)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createWithLocation(@Valid @RequestBody User user) {
         log.info("create {}", user);
@@ -34,6 +39,7 @@ public class AdminUserController extends AbstractUserController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(value = "users", allEntries = true)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@Valid @RequestBody final User user, @PathVariable final int id) {
         log.info("updating {} with id={}", user, id);
@@ -41,6 +47,7 @@ public class AdminUserController extends AbstractUserController {
         repository.prepareAndSave(user);
     }
 
+    @Cacheable
     @GetMapping
     public List<User> getAll() {
         log.info("getting all users");
@@ -62,6 +69,7 @@ public class AdminUserController extends AbstractUserController {
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(value = "users", allEntries = true)
     public void delete(@PathVariable final int id) {
         super.delete(id);
     }
@@ -69,6 +77,7 @@ public class AdminUserController extends AbstractUserController {
     @Transactional
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(value = "users", allEntries = true)
     public void enable(@PathVariable final int id, @RequestParam final boolean enabled) {
         log.info(enabled ? "enable {}" : "disable {}", id);
         User user = repository.getExisted(id);

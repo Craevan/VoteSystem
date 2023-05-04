@@ -4,6 +4,8 @@ import com.crevan.votesystem.model.Dish;
 import com.crevan.votesystem.to.DishTo;
 import com.crevan.votesystem.util.validation.ValidationUtil;
 import jakarta.validation.Valid;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +15,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
+@CacheConfig(cacheNames = "dishes")
 @RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminDishController extends AbstractDishController {
 
     static final String REST_URL = "/api/admin/dish";
 
+    @CacheEvict(allEntries = true)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody final DishTo dishTo) {
         ValidationUtil.checkNew(dishTo);
@@ -29,6 +33,7 @@ public class AdminDishController extends AbstractDishController {
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@Valid @RequestBody final DishTo dishTo, @PathVariable final int id) {
@@ -37,6 +42,7 @@ public class AdminDishController extends AbstractDishController {
 
     @Override
     @DeleteMapping("/{id}")
+    @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable final int id) {
         super.delete(id);
