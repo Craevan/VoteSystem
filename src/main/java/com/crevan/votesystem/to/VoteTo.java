@@ -17,7 +17,6 @@ public class VoteTo extends BaseEntityTo {
     @NotNull
     private Integer restaurantId;
 
-    @NotNull
     private LocalDate voteDate;
 
     public VoteTo(final Integer id, final Integer restaurantId, final LocalDate voteDate) {
