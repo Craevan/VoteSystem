@@ -18,8 +18,8 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "vote")
 @ToString(callSuper = true, exclude = {"user", "restaurant"})
+@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "vote_date"}, name = "unique_user_date_idx")})
 public class Vote extends BaseEntity {
 
     @NotNull
