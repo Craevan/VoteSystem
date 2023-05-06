@@ -2,7 +2,11 @@ package com.crevan.votesystem.util.validation;
 
 import com.crevan.votesystem.HasId;
 import com.crevan.votesystem.error.IllegalRequestDataException;
+import com.crevan.votesystem.model.Role;
+import com.crevan.votesystem.model.User;
 import lombok.experimental.UtilityClass;
+
+import java.util.Set;
 
 @UtilityClass
 public class ValidationUtil {
@@ -18,6 +22,12 @@ public class ValidationUtil {
             bean.setId(id);
         } else if (bean.id() != id) {
             throw new IllegalRequestDataException(bean.getClass().getSimpleName() + " must has id=" + id);
+        }
+    }
+
+    public static void checkRoles(final User user) {
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            user.setRoles(Set.of(Role.USER));
         }
     }
 }
