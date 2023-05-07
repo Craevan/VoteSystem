@@ -12,7 +12,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = "menu")
+@Access(AccessType.FIELD)
 @Table(name = "restaurant")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant extends NamedEntity implements Serializable {
