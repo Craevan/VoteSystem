@@ -113,6 +113,8 @@ public class AdminUserController extends AbstractUserController {
     @Operation(description = "Delete user by id",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content"),
+                    @ApiResponse(responseCode = "404", description = "Not Found",
+                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class))),
                     @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
                             content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
             })
