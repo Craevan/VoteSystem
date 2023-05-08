@@ -1,7 +1,14 @@
 package com.crevan.votesystem.web.restaurant;
 
+import com.crevan.votesystem.error.SwaggerExceptionInfo;
 import com.crevan.votesystem.model.Restaurant;
 import com.crevan.votesystem.to.RestaurantTo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,6 +25,13 @@ import java.util.List;
 @RestController
 @CacheConfig(cacheNames = "restaurants")
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "Restaurants-admin", description = "Controller for Administrators")
+@ApiResponses(value = {
+        @ApiResponse(responseCode = "403", description = "Forbidden",
+                content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized",
+                content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+})
 public class AdminRestaurantController extends AbstractRestaurantController {
 
     static final String REST_URL = "/api/admin/restaurants";
@@ -25,6 +39,11 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "Create new Restaurant", responses = {
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
+                    content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+    })
     public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody final Restaurant restaurant) {
         Restaurant newRestaurant = super.create(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -36,6 +55,10 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @Override
     @Cacheable
     @GetMapping
+    @Operation(description = "Get all Restaurants",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok")
+            })
     public List<RestaurantTo> getAll() {
         return super.getAll();
     }
@@ -44,6 +67,10 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "Update restaurant",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok")
+            })
     public void update(@Valid @RequestBody final Restaurant restaurant, @PathVariable final int id) {
         super.update(restaurant, id);
     }
@@ -52,6 +79,12 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @DeleteMapping("/{id}")
     @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(description = "Delete restaurant by ID",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "404", description = "Not Found",
+                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+            })
     public void delete(@PathVariable final int id) {
         super.delete(id);
     }
