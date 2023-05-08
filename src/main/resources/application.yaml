@@ -11,6 +11,7 @@ spring:
           batch_size: 20
         default_batch_fetch_size: 20
         format_sql: true
+        enable_lazy_load_no_trans: true
 
   datasource:
     url: jdbc:h2:mem:voting
