@@ -28,7 +28,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Votes")
+@Tag(name = "Votes", description = "Vote controller for users")
 @ApiResponse(responseCode = "401", description = "Unauthorized",
         content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
