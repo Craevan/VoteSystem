@@ -3,7 +3,6 @@ package com.crevan.votesystem.web.user;
 import com.crevan.votesystem.HasIdAndEmail;
 import com.crevan.votesystem.repository.UserRepository;
 import com.crevan.votesystem.web.AuthUser;
-import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
