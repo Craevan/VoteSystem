@@ -1,0 +1,45 @@
+spring:
+  jpa:
+    show-sql: true
+    open-in-view: false
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 20
+        default_batch_fetch_size: 20
+        format_sql: true
+        enable_lazy_load_no_trans: true
+
+  datasource:
+    url: jdbc:h2:mem:voting
+    username: sa
+    password:
+
+  jackson:
+    visibility:
+      field: any
+      getter: none
+      setter: none
+      is-getter: none
+
+springdoc:
+  swagger-ui:
+    defaultModelsExpandDepth: -1
+
+logging:
+  level:
+    root: warn
+    com.crevan.votesystem: debug
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: debug
+
+server.servlet:
+  encoding:
+    charset: UTF-8
+    enabled: true
+    force: true
+
+vote:
+  deadline: "11:00:00"
