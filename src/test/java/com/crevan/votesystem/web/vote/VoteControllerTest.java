@@ -5,25 +5,24 @@ import com.crevan.votesystem.to.VoteTo;
 import com.crevan.votesystem.util.json.JsonUtil;
 import com.crevan.votesystem.web.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.time.Clock;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.LocalTime;
 import java.util.List;
 
 import static com.crevan.votesystem.util.VoteUtil.getTos;
 import static com.crevan.votesystem.web.MatcherFactory.usingIgnoringFieldsComparator;
-import static com.crevan.votesystem.web.restaurant.RestaurantTestData.PAULANER_ID;
-import static com.crevan.votesystem.web.restaurant.RestaurantTestData.SALHINO_ID;
+import static com.crevan.votesystem.web.restaurant.RestaurantTestData.KRIEK_ID;
+import static com.crevan.votesystem.web.user.UserTestData.TEST_USER_MAIL;
 import static com.crevan.votesystem.web.user.UserTestData.USER_MAIL;
 import static com.crevan.votesystem.web.vote.VoteController.REST_URL;
 import static com.crevan.votesystem.web.vote.VoteTestData.*;
+import static org.mockito.Mockito.mockStatic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 class VoteControllerTest extends AbstractControllerTest {
 
@@ -47,7 +46,7 @@ class VoteControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = USER_MAIL)
+    @WithUserDetails(value = TEST_USER_MAIL)
     void createWithLocation() throws Exception {
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,23 +66,25 @@ class VoteControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void updateFalse() throws Exception {
-//        https://www.baeldung.com/java-override-system-time
-        Clock.fixed(Instant.parse("2023-05-01T11:00:01.00Z"), ZoneId.of(ZoneId.systemDefault().toString()));
-        VoteTo updated = new VoteTo(1, PAULANER_ID, LocalDate.of(2023, 5, 1));
-        perform(MockMvcRequestBuilders.put(REST_URL + "?restaurantId=" + updated.getRestaurantId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
-                .andExpect(status().isUnprocessableEntity());
+//        https://github.com/mockito/mockito/issues/2676
+        try (MockedStatic<LocalTime> guid1 = mockStatic(LocalTime.class, Mockito.CALLS_REAL_METHODS)) {
+            guid1.when(LocalTime::now).thenReturn(afterTime);
+            perform(MockMvcRequestBuilders.put(REST_URL + "?restaurantId=" + KRIEK_ID)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(JsonUtil.writeValue(updatedTo)))
+                    .andExpect(status().isUnprocessableEntity());
+        }
     }
 
     @Test
     @WithUserDetails(value = USER_MAIL)
     void updateTrue() throws Exception {
-        Clock.fixed(Instant.parse("2023-05-01T11:59:59.00Z"), ZoneId.of(ZoneId.systemDefault().toString()));
-        VoteTo updated = new VoteTo(1, SALHINO_ID, LocalDate.of(2023, 5, 1));
-        perform(MockMvcRequestBuilders.put(REST_URL + "?restaurantId=" + updated.getRestaurantId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
-                .andExpect(status().isUnprocessableEntity());
+        try (MockedStatic<LocalTime> guid1 = mockStatic(LocalTime.class, Mockito.CALLS_REAL_METHODS)) {
+            guid1.when(LocalTime::now).thenReturn(beforeTime);
+            perform(MockMvcRequestBuilders.put(REST_URL + "?restaurantId=" + KRIEK_ID)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(JsonUtil.writeValue(updatedTo)))
+                    .andExpect(status().isNoContent());
+        }
     }
 }
