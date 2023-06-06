@@ -22,6 +22,18 @@ Each restaurant provides a new menu each day.
 
 ---
 
-**Test**
+## Test
 
-* [Postman collection](https://www.postman.com/crevan/workspace/votesystem) (or you can download it from repository)
+***Credentials***
+
+* Admin:
+  * login: `admin@gmail.com`
+  * password: `admin`
+* User:
+  * login: `user@yandex.ru`
+  * password: `password`
+
+
+* [Postman collection](https://github.com/Craevan/VoteSystem/blob/master/VoteSystem.postman_collection.json)
+* [Swagger](http://localhost:8080/swagger-ui/index.html)
+
