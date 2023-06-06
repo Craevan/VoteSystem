@@ -17,14 +17,14 @@ VALUES ('Kriek'),
        ('Salhino');
 
 INSERT INTO DISH(name, price, vote_date, restaurant_id)
-VALUES ( 'kriek dish 1', 10000, '2023-05-01', 1),
-       ( 'kriek dish 2', 20000, '2023-05-01', 1),
-       ( 'altVelvet dish 1', 11000, '2023-05-01', 2),
-       ( 'altVelvet dish 2', 21000, '2023-05-01', 2),
-       ( 'paulaner dish 1', 12000, '2023-05-01', 3),
-       ( 'paulaner dish 2', 22000, '2023-05-01', 3),
-       ( 'salhino dish 1', 13000, '2023-05-01', 4),
-       ( 'salhino dish 2', 23000, '2023-05-01', 4);
+VALUES ( 'kriek dish 1', 10000, CURRENT_DATE, 1),
+       ( 'kriek dish 2', 20000, CURRENT_DATE, 1),
+       ( 'altVelvet dish 1', 11000, CURRENT_DATE, 2),
+       ( 'altVelvet dish 2', 21000, CURRENT_DATE, 2),
+       ( 'paulaner dish 1', 12000, CURRENT_DATE, 3),
+       ( 'paulaner dish 2', 22000, CURRENT_DATE, 3),
+       ( 'salhino dish 1', 13000, CURRENT_DATE, 4),
+       ( 'salhino dish 2', 23000, CURRENT_DATE, 4);
 
 INSERT INTO VOTE(USER_ID, RESTAURANT_ID, VOTE_DATE)
 VALUES (1, 1, '2023-05-01'),
