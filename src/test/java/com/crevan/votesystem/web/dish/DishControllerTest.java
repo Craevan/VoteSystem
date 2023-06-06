@@ -26,7 +26,7 @@ class DishControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void getAll() throws Exception {
-        LocalDate date = LocalDate.of(2023, 5, 1);
+        LocalDate date = LocalDate.now();
         List<DishTo> kriekDishTos = getTos(List.of(kriekDish1, kriekDish2));
         List<DishTo> altDishTos = getTos(List.of(altVelvetDish1, altVelvetDish2));
         List<DishTo> paulanerDishTos = getTos(List.of(paulanerDish1, paulanerDish2));
