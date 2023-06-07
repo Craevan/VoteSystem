@@ -1,8 +1,10 @@
 {
 	"info": {
-		"_postman_id": "9982ef71-1cbe-4c17-a9a6-fdea9e5e30db",
+		"_postman_id": "fa7329f9-cdfe-4401-89ad-3e994ce2dfba",
 		"name": "VoteSystem",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27353310",
+		"_collection_link": "https://www.postman.com/crevan/workspace/votesystem/collection/27353310-fa7329f9-cdfe-4401-89ad-3e994ce2dfba?action=share&creator=27353310&source=collection_link"
 	},
 	"item": [
 		{
@@ -300,7 +302,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/api/admin/users/5",
+									"raw": "localhost:8080/api/admin/users/6",
 									"host": [
 										"localhost"
 									],
@@ -309,7 +311,7 @@
 										"api",
 										"admin",
 										"users",
-										"5"
+										"6"
 									]
 								}
 							},
@@ -378,7 +380,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/api/admin/users/5",
+									"raw": "localhost:8080/api/admin/users/6",
 									"host": [
 										"localhost"
 									],
@@ -387,7 +389,7 @@
 										"api",
 										"admin",
 										"users",
-										"5"
+										"6"
 									]
 								}
 							},
@@ -847,7 +849,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/api/admin/restaurants/7",
+									"raw": "localhost:8080/api/admin/restaurants/5",
 									"host": [
 										"localhost"
 									],
@@ -856,7 +858,7 @@
 										"api",
 										"admin",
 										"restaurants",
-										"7"
+										"5"
 									]
 								}
 							},
@@ -930,6 +932,42 @@
 									"path": [
 										"api",
 										"restaurants",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get with Menu",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "password",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user@yandex.ru",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/restaurants/menu/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"restaurants",
+										"menu",
 										"1"
 									]
 								}
@@ -1153,157 +1191,6 @@
 										"api",
 										"profile",
 										"votes"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Admin Vote controller",
-					"item": [
-						{
-							"name": "Get all votes",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "admin",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "admin@gmail.com",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/admin/votes",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"admin",
-										"votes"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get all by user ID",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "admin",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "admin@gmail.com",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/admin/votes/by-user/1",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"admin",
-										"votes",
-										"by-user",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get by restaurant ID",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "admin",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "admin@gmail.com",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/admin/votes/by-restaurant/1",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"admin",
-										"votes",
-										"by-restaurant",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get by Date",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "admin",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "admin@gmail.com",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/admin/votes/by-date/2023-05-01",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"admin",
-										"votes",
-										"by-date",
-										"2023-05-01"
 									]
 								}
 							},
