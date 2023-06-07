@@ -1,12 +1,9 @@
 package com.crevan.votesystem.web.dish;
 
-import com.crevan.votesystem.error.SwaggerExceptionInfo;
 import com.crevan.votesystem.model.Dish;
 import com.crevan.votesystem.to.DishTo;
 import com.crevan.votesystem.util.validation.ValidationUtil;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,10 +23,8 @@ import java.net.URI;
 @Tag(name = "Dishes-admin", description = "Controller for Admins")
 @RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @ApiResponses(value = {
-        @ApiResponse(responseCode = "403", description = "Forbidden",
-                content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized",
-                content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized")
 })
 public class AdminDishController extends AbstractDishController {
 
@@ -39,8 +34,7 @@ public class AdminDishController extends AbstractDishController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Create new Dish", responses = {
             @ApiResponse(responseCode = "201", description = "Created"),
-            @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                    content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+            @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
     })
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody final DishTo dishTo) {
         ValidationUtil.checkNew(dishTo);
@@ -57,8 +51,7 @@ public class AdminDishController extends AbstractDishController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Update Dish", responses = {
             @ApiResponse(responseCode = "204", description = "No Content"),
-            @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                    content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+            @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
     })
     public void update(@Valid @RequestBody final DishTo dishTo, @PathVariable final int id) {
 
@@ -71,8 +64,7 @@ public class AdminDishController extends AbstractDishController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(description = "Delete Dish", responses = {
             @ApiResponse(responseCode = "204", description = "No Content"),
-            @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                    content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+            @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
     })
     public void delete(@PathVariable final int id) {
         super.delete(id);

@@ -1,12 +1,9 @@
 package com.crevan.votesystem.web.dish;
 
-import com.crevan.votesystem.error.SwaggerExceptionInfo;
 import com.crevan.votesystem.model.Dish;
 import com.crevan.votesystem.to.DishTo;
 import com.crevan.votesystem.util.DishUtil;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +20,7 @@ import java.util.List;
 @Tag(name = "Dishes", description = "Controller for Users")
 @CacheConfig(cacheNames = "dishes")
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-@ApiResponse(responseCode = "401", description = "Unauthorized",
-        content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+@ApiResponse(responseCode = "401", description = "Unauthorized")
 public class DishController extends AbstractDishController {
 
     static final String REST_URL = "/api/dishes";
@@ -44,8 +40,7 @@ public class DishController extends AbstractDishController {
     @Operation(description = "Get dish by ID",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok"),
-                    @ApiResponse(responseCode = "404", description = "Not Found",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "404", description = "Not Found")
             })
     public Dish getById(@PathVariable final int id) {
         log.info("get dish with id={}", id);

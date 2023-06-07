@@ -1,4 +1,5 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5fe3cef3c372487ba53d005c94d2b6d6)](https://app.codacy.com/gh/Craevan/VoteSystem/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+![example workflow](https://github.com/Craevan/VoteSystem/actions/workflows/tests.yml/badge.svg?event=push)
 
 ___
 
@@ -22,6 +23,18 @@ Each restaurant provides a new menu each day.
 
 ---
 
-**Test**
+## Test
 
-* [Postman collection](https://www.postman.com/crevan/workspace/votesystem) (or you can download it from repository)
+***Credentials***
+
+* Admin:
+  * login: `admin@gmail.com`
+  * password: `admin`
+* User:
+  * login: `user@yandex.ru`
+  * password: `password`
+
+
+* [Postman collection](https://github.com/Craevan/VoteSystem/blob/master/VoteSystem.postman_collection.json)
+* [Swagger](http://localhost:8080/swagger-ui/index.html)
+

@@ -1,11 +1,8 @@
 package com.crevan.votesystem.web.restaurant;
 
-import com.crevan.votesystem.error.SwaggerExceptionInfo;
 import com.crevan.votesystem.model.Restaurant;
 import com.crevan.votesystem.to.RestaurantTo;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,10 +24,8 @@ import java.util.List;
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Restaurants-admin", description = "Controller for Administrators")
 @ApiResponses(value = {
-        @ApiResponse(responseCode = "403", description = "Forbidden",
-                content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized",
-                content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized")
 })
 public class AdminRestaurantController extends AbstractRestaurantController {
 
@@ -41,8 +36,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Create new Restaurant", responses = {
             @ApiResponse(responseCode = "201", description = "Created"),
-            @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                    content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+            @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
     })
     public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody final Restaurant restaurant) {
         Restaurant newRestaurant = super.create(restaurant);
@@ -82,8 +76,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @Operation(description = "Delete restaurant by ID",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok"),
-                    @ApiResponse(responseCode = "404", description = "Not Found",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "404", description = "Not Found")
             })
     public void delete(@PathVariable final int id) {
         super.delete(id);

@@ -1,10 +1,13 @@
 package com.crevan.votesystem.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,7 +17,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "dish")
-@ToString(exclude = "restaurant")
+@ToString
 @NoArgsConstructor
 public class Dish extends NamedEntity {
 
@@ -27,16 +30,17 @@ public class Dish extends NamedEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @ToString.Exclude
+    @Hidden
     private Restaurant restaurant;
 
-    @Column(name = "vote_date")
-    @CreationTimestamp
-    private LocalDate voteDate;
+    @Column(name = "menu_item")
+    private LocalDate menuItem;
 
-    public Dish(final Integer id, final String name, final Long price, final Restaurant restaurant, final LocalDate voteDate) {
+    public Dish(final Integer id, final String name, final Long price, final Restaurant restaurant, final LocalDate menuItem) {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;
-        this.voteDate = voteDate;
+        this.menuItem = menuItem;
     }
 }

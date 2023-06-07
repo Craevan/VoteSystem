@@ -1,11 +1,8 @@
 package com.crevan.votesystem.web.user;
 
-import com.crevan.votesystem.error.SwaggerExceptionInfo;
 import com.crevan.votesystem.model.User;
 import com.crevan.votesystem.util.validation.ValidationUtil;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,10 +28,8 @@ import java.util.List;
 @RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Users", description = "Controller for Administrators")
 @ApiResponses(value = {
-        @ApiResponse(responseCode = "401", description = "Unauthorized",
-                content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden",
-                content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+        @ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @ApiResponse(responseCode = "403", description = "Forbidden")
 })
 public class AdminUserController extends AbstractUserController {
 
@@ -45,8 +40,7 @@ public class AdminUserController extends AbstractUserController {
     @Operation(description = "Create new user",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Created"),
-                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
             })
     public ResponseEntity<User> createWithLocation(@Valid @RequestBody User user) {
         log.info("create {}", user);
@@ -65,8 +59,7 @@ public class AdminUserController extends AbstractUserController {
     @Operation(description = "Update existed user",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content"),
-                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
             })
     public void update(@Valid @RequestBody final User user, @PathVariable final int id) {
         log.info("updating {} with id={}", user, id);
@@ -86,8 +79,7 @@ public class AdminUserController extends AbstractUserController {
     @Operation(description = "Get user by e-mail",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok"),
-                    @ApiResponse(responseCode = "404", description = "Not Found",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "404", description = "Not Found")
             })
     public User getByEmail(@RequestParam final String email) {
         log.info("get user with email={}", email);
@@ -99,8 +91,7 @@ public class AdminUserController extends AbstractUserController {
     @Operation(description = "Get user by Id",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok"),
-                    @ApiResponse(responseCode = "404", description = "Not Found",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "404", description = "Not Found")
             })
     public User get(@PathVariable final int id) {
         return super.get(id);
@@ -113,10 +104,8 @@ public class AdminUserController extends AbstractUserController {
     @Operation(description = "Delete user by id",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content"),
-                    @ApiResponse(responseCode = "404", description = "Not Found",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class))),
-                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "404", description = "Not Found"),
+                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
             })
     public void delete(@PathVariable final int id) {
         super.delete(id);
@@ -129,8 +118,7 @@ public class AdminUserController extends AbstractUserController {
     @Operation(description = "Enable/Disable user account",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content"),
-                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
             })
     public void enable(@PathVariable final int id, @RequestParam final boolean enabled) {
         log.info(enabled ? "enable {}" : "disable {}", id);
