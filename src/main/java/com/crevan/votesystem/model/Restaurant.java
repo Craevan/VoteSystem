@@ -12,19 +12,20 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@ToString(exclude = "menu")
+@ToString
 @Access(AccessType.FIELD)
-@Table(name = "restaurant")
+@Table(name = "restaurant", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant extends NamedEntity implements Serializable {
 
     @JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Set<Dish> menu;
 
-    public Restaurant(final Restaurant kriek) {
-        this(kriek.id(), kriek.name, kriek.menu);
+    public Restaurant(final Restaurant restaurant) {
+        this(restaurant.id(), restaurant.name, restaurant.menu);
     }
 
     public Restaurant(final Integer id, final String name) {
