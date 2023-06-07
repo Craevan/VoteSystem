@@ -16,7 +16,7 @@ public class DishUtil {
     }
 
     public static DishTo asTo(final Dish dish) {
-        return new DishTo(dish.id(), dish.getName(), dish.getPrice(), dish.getVoteDate(), dish.getRestaurant().id());
+        return new DishTo(dish.id(), dish.getName(), dish.getPrice(), dish.getMenuItem(), dish.getRestaurant().id());
     }
 
     public static List<DishTo> getTos(final Collection<Dish> dishes) {
