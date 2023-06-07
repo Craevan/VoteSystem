@@ -1,4 +1,5 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5fe3cef3c372487ba53d005c94d2b6d6)](https://app.codacy.com/gh/Craevan/VoteSystem/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+![example workflow](https://github.com/Craevan/VoteSystem/actions/workflows/tests.yml/badge.svg?event=push)
 
 ___
 
