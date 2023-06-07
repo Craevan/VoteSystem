@@ -1,6 +1,7 @@
 package com.crevan.votesystem.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class Vote extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ToString.Exclude
+    @Hidden
     private User user;
 
     @NotNull
@@ -35,6 +37,7 @@ public class Vote extends BaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @ToString.Exclude
+    @Hidden
     private Restaurant restaurant;
 
     @CreationTimestamp

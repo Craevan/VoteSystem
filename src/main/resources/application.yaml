@@ -24,10 +24,6 @@ spring:
       setter: none
       is-getter: none
 
-springdoc:
-  swagger-ui:
-    defaultModelsExpandDepth: -1
-
 logging:
   level:
     root: warn

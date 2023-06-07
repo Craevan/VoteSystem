@@ -1,6 +1,7 @@
 package com.crevan.votesystem.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class Dish extends NamedEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     @ToString.Exclude
+    @Hidden
     private Restaurant restaurant;
 
     @Column(name = "menu_item")
