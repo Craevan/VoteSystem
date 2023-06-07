@@ -1,14 +1,11 @@
 package com.crevan.votesystem.web.vote;
 
 import com.crevan.votesystem.error.IllegalRequestDataException;
-import com.crevan.votesystem.error.SwaggerExceptionInfo;
 import com.crevan.votesystem.model.Vote;
 import com.crevan.votesystem.to.VoteTo;
 import com.crevan.votesystem.util.VoteUtil;
 import com.crevan.votesystem.web.AuthUser;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,8 +26,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Tag(name = "Votes", description = "Vote controller for users")
-@ApiResponse(responseCode = "401", description = "Unauthorized",
-        content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+@ApiResponse(responseCode = "401", description = "Unauthorized")
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController extends AbstractVoteController {
 
@@ -55,8 +51,7 @@ public class VoteController extends AbstractVoteController {
     @Operation(description = "Getting vote by Id",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok"),
-                    @ApiResponse(responseCode = "404", description = "Not Found",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "404", description = "Not Found")
             })
     public Vote get(@PathVariable final int id) {
         log.info("get vote with id={}", id);
@@ -68,10 +63,8 @@ public class VoteController extends AbstractVoteController {
     @Operation(description = "Creates new vote",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Created"),
-                    @ApiResponse(responseCode = "403", description = "Forbidden",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class))),
-                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "403", description = "Forbidden"),
+                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
             })
     public ResponseEntity<Vote> createWithLocation(@Valid @RequestBody final VoteTo voteTo,
                                                    @AuthenticationPrincipal final AuthUser authUser) {
@@ -89,10 +82,8 @@ public class VoteController extends AbstractVoteController {
     @Operation(description = "Update user's vote",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content"),
-                    @ApiResponse(responseCode = "409", description = "Conflict",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class))),
-                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "409", description = "Conflict"),
+                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
             })
     public void update(@AuthenticationPrincipal final AuthUser authUser, @RequestParam final int restaurantId) {
         log.info("update vote for user={}, new restaurantId={}", authUser.getUser(), restaurantId);

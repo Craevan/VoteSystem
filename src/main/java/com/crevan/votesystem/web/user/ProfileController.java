@@ -1,14 +1,11 @@
 package com.crevan.votesystem.web.user;
 
-import com.crevan.votesystem.error.SwaggerExceptionInfo;
 import com.crevan.votesystem.model.User;
 import com.crevan.votesystem.to.UserTo;
 import com.crevan.votesystem.util.UserUtil;
 import com.crevan.votesystem.util.validation.ValidationUtil;
 import com.crevan.votesystem.web.AuthUser;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -39,8 +36,7 @@ public class ProfileController extends AbstractUserController {
     @Operation(description = "Get user account",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok"),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "401", description = "Unauthorized")
             })
     public User get(@AuthenticationPrincipal final AuthUser authUser) {
         log.info("get {}", authUser);
@@ -53,8 +49,7 @@ public class ProfileController extends AbstractUserController {
     @Operation(description = "Delete user account",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content"),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "401", description = "Unauthorized")
             })
     public void delete(@AuthenticationPrincipal final AuthUser authUser) {
         log.info("delete {}", authUser);
@@ -67,8 +62,7 @@ public class ProfileController extends AbstractUserController {
     @Operation(description = "Create user account",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Created"),
-                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
             })
     public ResponseEntity<User> register(@Valid @RequestBody final UserTo userTo) {
         log.info("register {}", userTo);
@@ -86,10 +80,8 @@ public class ProfileController extends AbstractUserController {
     @Operation(description = "Update user account info",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No Content"),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class))),
-                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity",
-                            content = @Content(schema = @Schema(implementation = SwaggerExceptionInfo.class)))
+                    @ApiResponse(responseCode = "401", description = "Unauthorized"),
+                    @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
             })
     public void update(@RequestBody @Valid final UserTo userTo, @AuthenticationPrincipal final AuthUser authUser) {
         log.info("update {} to {}", authUser, userTo);
