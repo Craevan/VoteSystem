@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class RestaurantControllerTest extends AbstractControllerTest {
 
+    private static final String MENU = "menu/";
     static final String REST_URL_SLASH = REST_URL + "/";
 
     @Test
@@ -24,7 +25,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(List.of(kriek, altVelvet, paulaner, salhino)));
+                .andExpect(RESTAURANT_MATCHER.contentJson(List.of(altVelvet, kriek, paulaner, salhino)));
     }
 
     @Test
@@ -47,5 +48,27 @@ class RestaurantControllerTest extends AbstractControllerTest {
     void getNotFound() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL_SLASH + NOT_FOUND))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void getWithMenu() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL_SLASH + MENU + kriek.id()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(RESTAURANT_MATCHER.contentJson(kriek));
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void getWithMenuNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL_SLASH + MENU + NOT_FOUND))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void getWithMenuUnAuth() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL_SLASH + MENU + NOT_FOUND))
+                .andExpect(status().isUnauthorized());
     }
 }
