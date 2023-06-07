@@ -12,10 +12,12 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(callSuper = true)
 @Access(AccessType.FIELD)
 @Table(name = "restaurant", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+// https://www.baeldung.com/spring-data-jpa-named-entity-graphs
+@NamedEntityGraph(name = "menu", attributeNodes = @NamedAttributeNode("menu"))
 public class Restaurant extends NamedEntity implements Serializable {
 
     @JsonManagedReference
