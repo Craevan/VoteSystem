@@ -23,7 +23,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Table(name = "users")
-@ToString(callSuper = true, exclude = "password")
+@ToString(callSuper = true)
 public class User extends NamedEntity implements Serializable, HasIdAndEmail {
 
     @Serial
@@ -40,6 +40,7 @@ public class User extends NamedEntity implements Serializable, HasIdAndEmail {
     @Size(max = 128)
     @Column(name = "password", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ToString.Exclude
     private String password;
 
     @Column(name = "is_active", nullable = false, columnDefinition = "bool default true")
