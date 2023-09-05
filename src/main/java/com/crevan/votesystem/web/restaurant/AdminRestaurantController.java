@@ -1,7 +1,6 @@
 package com.crevan.votesystem.web.restaurant;
 
 import com.crevan.votesystem.model.Restaurant;
-import com.crevan.votesystem.to.RestaurantTo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -53,8 +52,18 @@ public class AdminRestaurantController extends AbstractRestaurantController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok")
             })
-    public List<RestaurantTo> getAll() {
+    public List<Restaurant> getAll() {
         return super.getAll();
+    }
+
+    @GetMapping("/{id}")
+    @Operation(description = "Get Restaurant by ID",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "404", description = "Not Found")
+            })
+    public Restaurant getById(@PathVariable final int id) {
+        return super.getById(id);
     }
 
     @Override
