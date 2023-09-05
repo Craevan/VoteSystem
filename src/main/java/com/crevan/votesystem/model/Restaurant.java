@@ -1,6 +1,7 @@
 package com.crevan.votesystem.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -24,6 +25,7 @@ public class Restaurant extends NamedEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
+    @Hidden
     private Set<Dish> menu;
 
     public Restaurant(final Restaurant restaurant) {
