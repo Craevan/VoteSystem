@@ -2,7 +2,6 @@ package com.crevan.votesystem.web.restaurant;
 
 import com.crevan.votesystem.error.NotFoundException;
 import com.crevan.votesystem.model.Restaurant;
-import com.crevan.votesystem.to.RestaurantTo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,8 +32,8 @@ public class RestaurantController extends AbstractRestaurantController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok")
             })
-    public List<RestaurantTo> getAll() {
-        return super.getAll();
+    public List<Restaurant> getAll() {
+        return repository.getAllWithMenu().orElseThrow(() -> new NotFoundException("There is no Restaurants with menu"));
     }
 
     @GetMapping("/{id}")
@@ -44,11 +43,10 @@ public class RestaurantController extends AbstractRestaurantController {
                     @ApiResponse(responseCode = "404", description = "Not Found")
             })
     public Restaurant getById(@PathVariable final int id) {
-        log.info("get restaurant with id={}", id);
-        return repository.getExisted(id);
+        return super.getById(id);
     }
 
-    @GetMapping("/menu/{id}")
+    @GetMapping("{id}/menu/")
     @Operation(description = "Get Restaurant with menu",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok"),
