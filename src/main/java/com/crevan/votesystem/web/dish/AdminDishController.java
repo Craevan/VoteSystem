@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @CacheConfig(cacheNames = "dishes")
@@ -68,5 +71,27 @@ public class AdminDishController extends AbstractDishController {
     })
     public void delete(@PathVariable final int id) {
         super.delete(id);
+    }
+
+    @Override
+    @GetMapping
+    @Cacheable
+    @Operation(description = "Get menu for restaurant by ID and date",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok")
+            })
+    public List<DishTo> getAll(@RequestParam final int restaurantId, @RequestParam final LocalDate date) {
+        return super.getAll(restaurantId, date);
+    }
+
+    @Override
+    @GetMapping("/{id}")
+    @Operation(description = "Get dish by ID",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "404", description = "Not Found")
+            })
+    public Dish getById(@PathVariable final int id) {
+        return super.getById(id);
     }
 }

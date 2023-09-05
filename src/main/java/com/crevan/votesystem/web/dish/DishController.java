@@ -25,6 +25,7 @@ public class DishController extends AbstractDishController {
 
     static final String REST_URL = "/api/dishes";
 
+    @Override
     @GetMapping
     @Cacheable
     @Operation(description = "Get menu for restaurant by ID and date",
@@ -32,10 +33,10 @@ public class DishController extends AbstractDishController {
                     @ApiResponse(responseCode = "200", description = "Ok")
             })
     public List<DishTo> getAll(@RequestParam final int restaurantId, @RequestParam final LocalDate date) {
-        log.info("getting all dishes for restaurant with id={}, on date={}", restaurantId, date);
-        return DishUtil.getTos(dishRepository.findAll(restaurantId, date));
+        return super.getAll(restaurantId, date);
     }
 
+    @Override
     @GetMapping("/{id}")
     @Operation(description = "Get dish by ID",
             responses = {
@@ -43,7 +44,6 @@ public class DishController extends AbstractDishController {
                     @ApiResponse(responseCode = "404", description = "Not Found")
             })
     public Dish getById(@PathVariable final int id) {
-        log.info("get dish with id={}", id);
-        return dishRepository.getExisted(id);
+        return super.getById(id);
     }
 }
