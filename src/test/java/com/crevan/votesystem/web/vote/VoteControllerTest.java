@@ -17,6 +17,7 @@ import java.util.List;
 import static com.crevan.votesystem.util.VoteUtil.getTos;
 import static com.crevan.votesystem.web.MatcherFactory.usingIgnoringFieldsComparator;
 import static com.crevan.votesystem.web.restaurant.RestaurantTestData.KRIEK_ID;
+import static com.crevan.votesystem.web.restaurant.RestaurantTestData.PAULANER_ID;
 import static com.crevan.votesystem.web.user.UserTestData.TEST_USER_MAIL;
 import static com.crevan.votesystem.web.user.UserTestData.USER_MAIL;
 import static com.crevan.votesystem.web.vote.VoteController.REST_URL;
@@ -26,7 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class VoteControllerTest extends AbstractControllerTest {
 
-    static final String REST_URL_SLASH = REST_URL + "/";
+    private static final String RESTAURANT_ID_PARAM = "?restaurantId=";
+
+    private static final String REST_URL_SLASH = REST_URL + "/";
 
     @Test
     @WithUserDetails(value = USER_MAIL)
@@ -48,7 +51,7 @@ class VoteControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = TEST_USER_MAIL)
     void createWithLocation() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL)
+        perform(MockMvcRequestBuilders.post(REST_URL + RESTAURANT_ID_PARAM + PAULANER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newTo)))
                 .andExpect(status().isCreated());
@@ -69,7 +72,7 @@ class VoteControllerTest extends AbstractControllerTest {
 //        https://github.com/mockito/mockito/issues/2676
         try (MockedStatic<LocalTime> guid1 = mockStatic(LocalTime.class, Mockito.CALLS_REAL_METHODS)) {
             guid1.when(LocalTime::now).thenReturn(afterTime);
-            perform(MockMvcRequestBuilders.put(REST_URL + "?restaurantId=" + KRIEK_ID)
+            perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID_PARAM + KRIEK_ID)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(JsonUtil.writeValue(updatedTo)))
                     .andExpect(status().isUnprocessableEntity());
@@ -81,7 +84,7 @@ class VoteControllerTest extends AbstractControllerTest {
     void updateTrue() throws Exception {
         try (MockedStatic<LocalTime> guid1 = mockStatic(LocalTime.class, Mockito.CALLS_REAL_METHODS)) {
             guid1.when(LocalTime::now).thenReturn(beforeTime);
-            perform(MockMvcRequestBuilders.put(REST_URL + "?restaurantId=" + KRIEK_ID)
+            perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID_PARAM + KRIEK_ID)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(JsonUtil.writeValue(updatedTo)))
                     .andExpect(status().isNoContent());
