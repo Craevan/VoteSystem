@@ -65,7 +65,7 @@ public class AdminDishControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void updateInvalid() throws Exception {
-        DishTo dishTo = new DishTo(0, null, null, null, null);
+        DishTo dishTo = new DishTo(0, null, -1L, null, -1);
         perform(MockMvcRequestBuilders.put(REST_URL_SLASH + dishTo.id())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(dishTo)))

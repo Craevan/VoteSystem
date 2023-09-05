@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "dish")
+@Table(name = "dish", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "menu_date"}, name = "unique_name_date_idx"))
 @ToString
 @NoArgsConstructor
 public class Dish extends NamedEntity {
@@ -34,13 +34,13 @@ public class Dish extends NamedEntity {
     @Hidden
     private Restaurant restaurant;
 
-    @Column(name = "menu_item")
-    private LocalDate menuItem;
+    @Column(name = "menu_date")
+    private LocalDate menuDate;
 
-    public Dish(final Integer id, final String name, final Long price, final Restaurant restaurant, final LocalDate menuItem) {
+    public Dish(final Integer id, final String name, final Long price, final Restaurant restaurant, final LocalDate menuDate) {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;
-        this.menuItem = menuItem;
+        this.menuDate = menuDate;
     }
 }

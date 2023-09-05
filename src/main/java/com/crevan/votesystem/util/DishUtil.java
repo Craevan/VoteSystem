@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 public class DishUtil {
 
     public static Dish createNewFromTo(final DishTo dishTo) {
-        return new Dish(dishTo.getId(), dishTo.getName(), dishTo.getPrice(), null, dishTo.getDate());
+        return new Dish(dishTo.getId(), dishTo.getName(), dishTo.getPrice(), null, dishTo.getMenuDate());
     }
 
     public static DishTo asTo(final Dish dish) {
-        return new DishTo(dish.id(), dish.getName(), dish.getPrice(), dish.getMenuItem(), dish.getRestaurant().id());
+        return new DishTo(dish.id(), dish.getName(), dish.getPrice(), dish.getMenuDate(), dish.getRestaurant().id());
     }
 
     public static List<DishTo> getTos(final Collection<Dish> dishes) {
