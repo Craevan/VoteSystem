@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -12,6 +13,10 @@ import java.util.Optional;
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
     // https://www.baeldung.com/spring-data-jpa-named-entity-graphs
     @EntityGraph(value = "menu", type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r JOIN r.menu m ON m.menuItem = CURRENT_DATE WHERE r.id=?1")
+    @Query("SELECT r FROM Restaurant r JOIN r.menu m ON m.menuDate = CURRENT_DATE WHERE r.id=?1")
     Optional<Restaurant> getWithMenu(final int id);
+
+    @EntityGraph(value = "menu", type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT r FROM Restaurant r JOIN r.menu m ON m.menuDate = CURRENT_DATE")
+    Optional<List<Restaurant>> getAllWithMenu();
 }
