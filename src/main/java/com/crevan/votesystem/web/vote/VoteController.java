@@ -8,7 +8,6 @@ import com.crevan.votesystem.web.AuthUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -66,10 +65,10 @@ public class VoteController extends AbstractVoteController {
                     @ApiResponse(responseCode = "403", description = "Forbidden"),
                     @ApiResponse(responseCode = "422", description = "Unprocessable Entity")
             })
-    public ResponseEntity<Vote> createWithLocation(@Valid @RequestBody final VoteTo voteTo,
+    public ResponseEntity<Vote> createWithLocation(@RequestParam final int restaurantId,
                                                    @AuthenticationPrincipal final AuthUser authUser) {
-        log.info("create vote={}", voteTo);
-        Vote newVote = voteRepository.save(new Vote(authUser.getUser(), getRestaurant(voteTo.getRestaurantId())));
+        Vote newVote = voteRepository.save(new Vote(authUser.getUser(), restaurantRepository.get(restaurantId)));
+        log.info("create vote={}", newVote);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(newVote.getId()).toUri();

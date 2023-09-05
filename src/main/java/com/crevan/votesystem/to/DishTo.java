@@ -15,20 +15,19 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class DishTo extends NamedEntityTo {
 
-    @NotNull
     @Min(value = 1, message = "Price must be at least 1")
-    private Long price;
+    private long price;
 
     @NotNull
-    private LocalDate date;
+    private LocalDate menuDate;
 
     @NotNull
-    private Integer restaurantId;
+    private int restaurantId;
 
-    public DishTo(final Integer id, final String name, final Long price, final LocalDate date, final Integer restaurantId) {
+    public DishTo(final Integer id, final String name, final long price, final LocalDate menuDate, final int restaurantId) {
         super(id, name);
         this.price = price;
-        this.date = date;
+        this.menuDate = menuDate;
         this.restaurantId = restaurantId;
     }
 }

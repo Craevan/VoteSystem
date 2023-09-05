@@ -16,7 +16,7 @@ VALUES ('Kriek'),
        ('Paulaner'),
        ('Salhino');
 
-INSERT INTO DISH(name, price, menu_item, restaurant_id)
+INSERT INTO DISH(name, price, menu_date, restaurant_id)
 VALUES ( 'kriek dish 1', 10000, CURRENT_DATE, 1),
        ( 'kriek dish 2', 20000, CURRENT_DATE, 1),
        ( 'altVelvet dish 1', 11000, CURRENT_DATE, 2),

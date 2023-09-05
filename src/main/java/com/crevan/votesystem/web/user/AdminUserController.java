@@ -11,7 +11,6 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -67,7 +66,6 @@ public class AdminUserController extends AbstractUserController {
         repository.prepareAndSave(user);
     }
 
-    @Cacheable
     @GetMapping
     @Operation(description = "Get all users", responses = {@ApiResponse(responseCode = "200", description = "Ok")})
     public List<User> getAll() {
